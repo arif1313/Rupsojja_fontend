@@ -1,0 +1,104 @@
+{
+  "projects": [
+    {
+      "name": "Real Estate Website",
+      "description": "A complete MERN stack Real Estate app React and Tailwind CSS",
+      "technologies_used": ["React", "Tailwind", "Framer Motion"],
+      "features": ["Responsive design", "Animated sections", "Dynamic projects"],
+      "github_url": "https://github.com/arif1313/Dream-Dwell",
+      "live_demo_url": "https://real-easted.web.app/",
+      "image": "/realState.jpeg",
+      "category": "frontend"
+    },
+    {
+      "name": "Event Management Website",
+      "description": "A complete MERN stack e-commerce app with cart ",
+      "technologies_used": ["React", "Node.js", "Express", "MongoDB"],
+      "features": ["JWT Auth", "Admin Dashboard", "Stripe Payment"],
+      "github_url": "https://github.com/arif1313/Event-management",
+      "live_demo_url": "https://event-project-17124.web.app/",
+      "image": "/event.jpeg",
+      "category": "frontend"
+    },
+    {
+      "name": "E-Commerce API",
+      "description": "REST API for e-commerce backend",
+      "technologies_used": ["Node.js", "Express", "MongoDB"],
+      "features": ["JWT Auth", "Product Management", "Payment Gateway"],
+      "github_url": "https://github.com/arif1313/eComarceServer",
+      "live_demo_url": "https://e-comarce-project.vercel.app/api/products",
+      "image": "/api.jpg",
+      "category": "backend"
+    },
+    {
+      "name": "Car Wash API",
+      "description": "A blogging backend system with CRUD and authentication",
+      "technologies_used": ["Node.js", "Express", "MongoDB", "JWT"],
+      "features": ["Blog CRUD", "User Auth", "Search & Filter"],
+      "github_url": "https://github.com/arif1313/washWave",
+      "live_demo_url": "https://wash-wave2.vercel.app/api/services",
+      "image": "/api.jpg",
+      "category": "backend"
+    },
+        {
+      "name": "Crime Alert API",
+      "description": "A blogging backend system with CRUD and authentication",
+      "technologies_used": ["Node.js", "Express", "MongoDB", "JWT"],
+      "features": ["Blog CRUD", "User Auth", "Search & Filter"],
+      "github_url": "https://github.com/arif1313/Crime_project_backend",
+      "live_demo_url": "https://wash-wave2.vercel.app/",
+      "image": "/api.jpg",
+      "category": "backend"
+    },
+    {
+      "name": "Todo Mobile App",
+      "description": "Cross-platform task manager app",
+      "technologies_used": ["React Native", "Expo"],
+      "features": ["Add / Delete tasks", "Push Notifications", "Local storage"],
+      "github_url": "https://github.com/user/todo-app",
+      "live_demo_url": "#",
+      "image": "/images/mobile.png",
+      "category": "mobile"
+    },
+    {
+      "name": "Fitness Tracker App",
+      "description": "Mobile app for tracking daily fitness activities",
+      "technologies_used": ["React Native", "Firebase"],
+      "features": ["Workout Logs", "BMI Calculator", "User Auth"],
+      "github_url": "https://github.com/user/fitness-app",
+      "live_demo_url": "#",
+      "image": "/images/fitness.png",
+      "category": "mobile"
+    },
+    {
+      "name": "Sorting Visualizer",
+      "description": "Visualizer for algorithms like Merge Sort, Quick Sort etc.",
+      "technologies_used": ["C++", "SFML"],
+      "features": ["Merge Sort", "Quick Sort", "Heap Sort"],
+      "github_url": "https://github.com/user/sorting-visualizer",
+      "live_demo_url": "#",
+      "image": "/images/coding.png",
+      "category": "coding"
+    },
+    {
+      "name": "Bank Management System",
+      "description": "A CLI-based bank management system written in Java",
+      "technologies_used": ["Java", "OOP"],
+      "features": ["Deposit & Withdraw", "Balance Inquiry", "Transaction Logs"],
+      "github_url": "https://github.com/user/bank-system",
+      "live_demo_url": "#",
+      "image": "/images/java.png",
+      "category": "coding"
+    },
+    {
+      "name": "Student Record System",
+      "description": "Simple project to manage student data using C language",
+      "technologies_used": ["C", "File Handling"],
+      "features": ["Add Records", "Search Students", "Delete Records"],
+      "github_url": "https://github.com/user/student-system",
+      "live_demo_url": "#",
+      "image": "/images/c.png",
+      "category": "coding"
+    }
+  ]
+}

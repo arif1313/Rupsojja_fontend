@@ -1,0 +1,138 @@
+🏫 Dashboard (Home)
+
+Show key statistics, charts, and summaries.
+Features:
+
+📊 Overview Cards → total students, teachers, classes, income, expenses.
+
+📅 Upcoming Events / Exams Calendar
+
+⏰ Today’s Attendance Summary (pie chart)
+
+📈 Monthly Report Chart – total fees collected, students admitted, etc.
+
+🔔 Recent Notifications (exam schedule, circulars)
+
+👩‍🏫 Teacher Section
+
+Features:
+
+➕ Add / Update / Remove teachers
+
+👁️ View teacher profile with assigned class & subject
+
+🧾 Attendance record for teachers
+
+📚 Assign teacher → specific subject/class
+
+📤 Export teacher list (PDF/Excel)
+
+💬 Teacher notice board / announcements
+
+👨‍🎓 Student Section
+
+Features:
+
+➕ Add / Edit / Delete students
+
+🏫 Class-wise student list
+
+📜 Import student data (CSV or Excel)
+
+📷 Student photo upload
+
+🧾 Student profile → guardian info, address, contact, etc.
+
+📑 Attendance tracking (daily/subject-wise)
+
+📤 Export class list to Excel / Print
+
+🧮 Result Management
+
+Features:
+
+🧾 Enter results (tutorial, written, mcq) per subject
+
+🔍 View class-based & individual results
+
+🧮 Auto calculate total, average, and grade
+
+📊 Class performance chart (subject-wise)
+
+🖨️ Print class result sheet
+
+🧾 Print individual student report card
+
+🏆 Auto generate top 3 students per class
+
+📤 Export result to Excel or PDF
+
+🧍‍♂️ Management Section
+
+Features:
+
+📊 Total students, teachers, revenue, expenses
+
+🕒 Shift management (Morning / Day / Evening)
+
+🧾 Manage fees, salary, and expenses
+
+🗂️ Manage user roles (Admin, Teacher, Accountant)
+
+🔐 Authentication + authorization
+
+🏫 Academic year setup (2025, 2026, etc.)
+
+💰 Payment Management
+
+Features:
+
+🧾 Student fee tracking (due, paid, partially paid)
+
+💸 Teacher salary management
+
+📅 Monthly fee reminder system
+
+📤 Generate receipts (PDF)
+
+📊 Graphs of income vs expense
+
+🪪 Payment history filter (by student, class, or month)
+
+🧑‍💼 Admin / System Settings
+
+Features:
+
+⚙️ Manage roles & permissions (admin, teacher, student)
+
+🧾 Backup / Restore data
+
+🖼️ Change school logo, name, address
+
+🔐 Change password, reset system
+
+🌗 Dark mode toggle
+
+🔔 Optional Enhancements
+
+🔎 Global search (student name, ID, class)
+
+🧠 AI result analyzer → predicts weak subjects
+
+📅 Online class schedule management
+
+📢 Notice board / announcement system
+
+📲 Responsive mobile layout
+
+📤 Export any table (PDF, Excel, CSV)
+
+🧾 Print reports directly
+
+//  { path: "list", element: <StudentList /> },
+//           { path: "add", element: <StudentForm /> },
+//           { path: "profile/:id", element: <StudentProfile /> },
+//           { path: "attendance", element: <StudentAttendance /> },
+//           { path: "import", element: <StudentImport /> },
+//           { path: "photo", element: <StudentPhoto /> },
+//           { path: "export", element: <StudentExport /> },
