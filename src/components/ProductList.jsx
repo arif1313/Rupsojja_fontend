@@ -1,11 +1,14 @@
 import { useState } from "react";
 import ProductCard from "./ProductCard";
 
+// Update with your new direct image URL
+const IMAGE_URL = "https://i.ibb.co/C547gcsH/image.jpg";
+
 const products = Array.from({ length: 24 }, (_, i) => ({
   id: i,
   title: `Ladies Product ${i + 1}`,
   price: 1200 + i * 10,
-  img: "https://source.unsplash.com/400x400/?fashion,women"
+  img: IMAGE_URL,
 }));
 
 const ProductList = () => {
@@ -28,17 +31,19 @@ const ProductList = () => {
 
       <div className="flex justify-center gap-4 mt-6">
         <button
-          onClick={() => setPage(page - 1)}
+          onClick={() => setPage((prev) => prev - 1)}
           disabled={page === 1}
           className="px-4 py-2 bg-pink-500 text-white rounded disabled:opacity-50"
         >
           Prev
         </button>
 
-        <span>{page} / {totalPage}</span>
+        <span className="font-semibold">
+          {page} / {totalPage}
+        </span>
 
         <button
-          onClick={() => setPage(page + 1)}
+          onClick={() => setPage((prev) => prev + 1)}
           disabled={page === totalPage}
           className="px-4 py-2 bg-pink-500 text-white rounded disabled:opacity-50"
         >
