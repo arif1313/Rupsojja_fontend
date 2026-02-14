@@ -1,16 +1,19 @@
-import Navbar from "../components/Navbar";
-import Carousel from "../components/Carousel";
+
+
+
 import CategorySection from "../components/CategorySection";
-import ProductList from "../components/ProductList";
+
 import Footer from "../components/Footer";
+import HeroCarousel from "../components/HeroCarouse";
+
+import Products from "../components/Products";
 
 const Home = () => {
   return (
     <>
-      <Navbar />
-      <Carousel />
+      <HeroCarousel />
       <CategorySection />
-      <ProductList />
+   <Products></Products>
       <Footer />
     </>
   );
