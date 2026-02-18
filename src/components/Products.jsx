@@ -137,135 +137,54 @@ const Products = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">Shop Products</h1>
-        <p className="text-gray-600">
-          Discover our collection of premium women's fashion and jewelry
-        </p>
-      </div>
+     
 
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* Filters Sidebar - Mobile */}
-        {/* <div className="lg:hidden mb-4">
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center justify-between w-full bg-white border rounded-lg px-4 py-3"
-          >
-            <div className="flex items-center">
-              <Filter size={20} className="mr-2" />
-              <span>Filters</span>
-            </div>
-            <ChevronDown
-              size={20}
-              className={`transition-transform ${showFilters ? 'rotate-180' : ''}`}
-            />
-          </button>
-        </div> */}
-
-        {/* Filters Sidebar - Desktop */}
-        {/* <div
-          className={`${
-            showFilters ? 'block' : 'hidden'
-          } lg:block lg:w-1/4 space-y-6`}
-        >
-          <div className="bg-white rounded-lg p-6 shadow-sm">
-            <h3 className="font-bold text-lg mb-4">Categories</h3>
-            <div className="space-y-2">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  className="block w-full text-left px-2 py-2 rounded hover:bg-pink-50 hover:text-pink-600 transition-colors"
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg p-6 shadow-sm">
-            <h3 className="font-bold text-lg mb-4">Price Range</h3>
-            <div className="space-y-2">
-              {filters.price.map((price) => (
-                <label key={price.value} className="flex items-center">
-                  <input
-                    type="radio"
-                    name="price"
-                    value={price.value}
-                    className="mr-3"
-                  />
-                  <span>{price.label}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg p-6 shadow-sm">
-            <h3 className="font-bold text-lg mb-4">Colors</h3>
-            <div className="flex flex-wrap gap-2">
-              {filters.colors.map((color) => (
-                <button
-                  key={color}
-                  className={`px-3 py-1 border rounded-full text-sm ${
-                    color === 'Gold'
-                      ? 'bg-yellow-100 text-yellow-800 border-yellow-300'
-                      : color === 'Silver'
-                      ? 'bg-gray-100 text-gray-800 border-gray-300'
-                      : 'bg-gray-50 text-gray-800 border-gray-300'
-                  }`}
-                >
-                  {color}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div> */}
 
         {/* Products Grid */}
         <div className="">
           {/* Toolbar */}
-          <div className="bg-white rounded-lg p-4 mb-6 shadow-sm">
-            <div className="flex flex-col md:flex-row md:items-center justify-between">
-              <div className="flex items-center mb-4 md:mb-0">
-                <span className="mr-4">{products.length} products</span>
-                <div className="flex border rounded-lg overflow-hidden">
-                  <button
-                    onClick={() => setViewMode('grid')}
-                    className={`p-2 ${
-                      viewMode === 'grid'
-                        ? 'bg-pink-100 text-pink-600'
-                        : 'hover:bg-gray-100'
-                    }`}
-                  >
-                    <Grid size={20} />
-                  </button>
-                  <button
-                    onClick={() => setViewMode('list')}
-                    className={`p-2 border-l ${
-                      viewMode === 'list'
-                        ? 'bg-pink-100 text-pink-600'
-                        : 'hover:bg-gray-100'
-                    }`}
-                  >
-                    <List size={20} />
-                  </button>
-                </div>
-              </div>
+         {/* Toolbar */}
+<div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+  
+  {/* Left Side */}
+  <div className="flex items-center gap-4">
+    <button
+      onClick={() => setShowFilters(!showFilters)}
+      className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-50"
+    >
+      <Filter size={18} />
+      Filters
+    </button>
 
-              <div className="flex items-center space-x-4">
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
-                >
-                  <option value="featured">Featured</option>
-                  <option value="newest">Newest</option>
-                  <option value="price-low">Price: Low to High</option>
-                  <option value="price-high">Price: High to Low</option>
-                  <option value="rating">Best Rating</option>
-                </select>
-              </div>
-            </div>
-          </div>
+    <span className="text-gray-600 text-sm">
+      Showing {products.length} products
+    </span>
+  </div>
+
+  {/* Right Side */}
+  <div className="flex items-center gap-4">
+    
+    {/* Sort */}
+    <div className="relative">
+      <select
+        value={sortBy}
+        onChange={(e) => setSortBy(e.target.value)}
+        className="appearance-none border rounded-lg px-4 py-2 pr-8 focus:outline-none"
+      >
+        <option value="featured">Featured</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+        <option value="rating">Top Rated</option>
+      </select>
+      <ChevronDown
+        size={16}
+        className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+      />
+    </div>
+  </div>
+</div>
+
 
           {/* Products */}
           <ProductGrid products={products} columns={viewMode === 'grid' ? 4 : 1} />

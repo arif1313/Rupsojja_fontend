@@ -42,68 +42,68 @@ const HeroCarousel = () => {
   }, []);
 
   return (
-  <div className="relative h-[500px] md:h-[600px] overflow-hidden">
-  {slides.map((slide, index) => (
-    <div
-      key={slide.id}
-      className={`absolute inset-0 transition-opacity duration-1000 ${
-        index === currentSlide ? 'opacity-100' : 'opacity-0'
-      }`}
-    >
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${slide.image})` }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-40" />
-      </div>
-      
-      <div className="relative h-full flex items-center justify-center">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-fade-in">
-              {slide.title}
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 animate-fade-in-delay">
-              {slide.subtitle}
-            </p>
-            <button className="bg-pink-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-pink-700 transition-all transform hover:scale-105 animate-slide-up">
-              {slide.buttonText}
-            </button>
+    <div className="relative h-[200px] md:h-[300px] lg:h-[350px] overflow-hidden">
+      {slides.map((slide, index) => (
+        <div
+          key={slide.id}
+          className={`absolute inset-0 transition-opacity duration-1000 ${
+            index === currentSlide ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${slide.image})` }}
+          >
+            <div className="absolute inset-0 bg-black bg-opacity-40" />
+          </div>
+          
+          <div className="relative h-full flex items-center justify-center">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto text-center text-white">
+                <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 animate-fade-in">
+                  {slide.title}
+                </h1>
+                <p className="text-base md:text-lg lg:text-xl mb-4 md:mb-6 animate-fade-in-delay">
+                  {slide.subtitle}
+                </p>
+                <button className="bg-pink-600 text-white px-6 md:px-8 py-2 md:py-3 rounded-full text-sm md:text-base lg:text-lg font-semibold hover:bg-pink-700 transition-all transform hover:scale-105 animate-slide-up">
+                  {slide.buttonText}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
+      ))}
+
+      {/* Navigation Buttons */}
+      <button
+        onClick={prevSlide}
+        className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-1 md:p-2 rounded-full hover:bg-opacity-100 transition-all"
+      >
+        <ChevronLeft size={20} className="md:w-6 md:h-6" />
+      </button>
+      <button
+        onClick={nextSlide}
+        className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-1 md:p-2 rounded-full hover:bg-opacity-100 transition-all"
+      >
+        <ChevronRight size={20} className="md:w-6 md:h-6" />
+      </button>
+
+      {/* Indicators */}
+      <div className="absolute bottom-3 md:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentSlide(index)}
+            className={`w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-all ${
+              index === currentSlide
+                ? 'bg-pink-600 w-4 md:w-5'
+                : 'bg-white bg-opacity-50'
+            }`}
+          />
+        ))}
       </div>
     </div>
-  ))}
-
-  {/* Navigation Buttons */}
-  <button
-    onClick={prevSlide}
-    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-2 rounded-full hover:bg-opacity-100 transition-all"
-  >
-    <ChevronLeft size={24} />
-  </button>
-  <button
-    onClick={nextSlide}
-    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-2 rounded-full hover:bg-opacity-100 transition-all"
-  >
-    <ChevronRight size={24} />
-  </button>
-
-  {/* Indicators */}
-  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-    {slides.map((_, index) => (
-      <button
-        key={index}
-        onClick={() => setCurrentSlide(index)}
-        className={`w-3 h-3 rounded-full transition-all ${
-          index === currentSlide
-            ? 'bg-pink-600 w-6'
-            : 'bg-white bg-opacity-50'
-        }`}
-      />
-    ))}
-  </div>
-</div>
   );
 };
 

@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Star, ShoppingBag } from 'lucide-react';
+import { Heart, ShoppingBag } from 'lucide-react';
 
 const ProductCard = ({ product }) => {
   const [isLiked, setIsLiked] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    // Add to cart logic here
     console.log('Added to cart:', product.id);
   };
 
@@ -20,90 +18,96 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-   
-    <Link to={`/product/${product.id}`}>
-      <div
-        className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+    <Link to={`/product/${product.id}`} className="block">
+      <div className="group relative bg-white rounded-lg overflow-hidden 
+                      shadow-sm hover:shadow-xl 
+                      transition-all duration-300">
+
         {/* Product Image */}
-        <div className="relative overflow-hidden aspect-square">
+        <div className="relative overflow-hidden h-44 md:h-56 lg:h-64">
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            className="w-full h-full object-cover 
+                       group-hover:scale-110 
+                       transition-transform duration-500"
           />
-          
-          {/* Quick Actions */}
-          <div className={`absolute top-2 right-2 flex flex-col gap-2 transition-all duration-300 ${
-            isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
-          }`}>
-            <button
-              onClick={handleLike}
-              className="bg-white p-2 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-110"
-            >
-              <Heart
-                size={18}
-                className={isLiked ? 'fill-pink-600 text-pink-600' : 'text-gray-600'}
-              />
-            </button>
-            <button
-              onClick={handleAddToCart}
-              className="bg-white p-2 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-110"
-            >
-              <ShoppingBag size={18} className="text-gray-600" />
-            </button>
-          </div>
+
+          {/* Like Button */}
+          <button
+            onClick={handleLike}
+            className="absolute top-2 right-2 
+                       bg-white p-1.5 md:p-2
+                       rounded-full shadow-md 
+                       hover:scale-110 transition"
+          >
+            <Heart
+              size={16}
+              className={`md:w-5 md:h-5 ${
+                isLiked
+                  ? 'fill-pink-600 text-pink-600'
+                  : 'text-gray-600'
+              }`}
+            />
+          </button>
 
           {/* Sale Badge */}
           {product.originalPrice && (
-            <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+            <div className="absolute top-2 left-2 
+                            bg-red-500 text-white 
+                            text-[10px] md:text-xs
+                            font-bold px-2 py-0.5 md:px-3 md:py-1
+                            rounded">
               SALE
             </div>
           )}
-
-          {/* Quick View Button */}
-          <button className={`absolute bottom-0 left-0 right-0 bg-black text-white py-2 text-sm font-semibold transition-all duration-300 transform ${
-            isHovered ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
-          }`}>
-            Quick View
-          </button>
         </div>
 
         {/* Product Info */}
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">
-              {product.category}
-            </span>
-            <div className="flex items-center">
-              <Star size={14} className="text-yellow-400 fill-current" />
-              <span className="text-sm ml-1">{product.rating}</span>
-            </div>
-          </div>
-          
-          <h3 className="font-medium text-gray-900 mb-2 line-clamp-1 group-hover:text-pink-600 transition-colors">
+        <div className="p-2 md:p-4">
+
+          {/* Product Name */}
+          <h3 className="font-medium text-gray-900 
+                         text-xs md:text-sm lg:text-base
+                         mb-1 md:mb-2
+                         line-clamp-1
+                         group-hover:text-pink-600 
+                         transition-colors">
             {product.name}
           </h3>
-          
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <span className="text-lg font-bold text-gray-900">
-                ${product.price.toFixed(2)}
-              </span>
-              {product.originalPrice && (
-                <span className="text-sm text-gray-500 line-through">
-                  ${product.originalPrice.toFixed(2)}
-                </span>
-              )}
-            </div>
+
+          {/* Price */}
+          <div className="flex items-center gap-2 mb-2 md:mb-3">
+            <span className="text-sm md:text-base font-bold text-gray-900">
+              ${product.price.toFixed(2)}
+            </span>
             {product.originalPrice && (
-              <span className="text-sm font-semibold text-red-600">
-                {Math.round((1 - product.price / product.originalPrice) * 100)}% OFF
+              <span className="text-xs md:text-sm text-gray-500 line-through">
+                ${product.originalPrice.toFixed(2)}
               </span>
             )}
           </div>
+
+          {/* Add to Cart Button */}
+          <button
+            onClick={handleAddToCart}
+            className="
+              w-full 
+              bg-black text-white 
+              py-2 px-3 text-xs
+              md:py-3 md:px-4 md:text-sm
+              lg:py-3.5 lg:text-base
+              rounded-md font-medium
+              hover:bg-gray-800 
+              transition-all duration-200
+              active:scale-95
+              flex items-center justify-center gap-2
+            "
+          >
+            <ShoppingBag className="w-4 h-4 md:w-5 md:h-5" />
+            Add to Cart
+          </button>
+
         </div>
       </div>
     </Link>

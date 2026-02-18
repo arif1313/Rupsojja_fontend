@@ -1,153 +1,119 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+import 'swiper/css';
 
 const CategorySection = () => {
   const categories = [
     {
+      id: 0,
+      name: 'All Products',
+      image: 'https://images.unsplash.com/photo-1581291519195-ef11498d1cf6?auto=format&fit=crop&w=500',
+      link: '/products',
+    },
+    {
       id: 1,
-      name: 'Dresses',
-      image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=500',
-      count: '45 Items',
-      link: '/products?category=dresses',
+      name: 'Earrings',
+      image: 'https://images.unsplash.com/photo-1635767798638-3e25273a8236?auto=format&fit=crop&w=500',
+      link: '/products?category=earrings',
     },
     {
       id: 2,
-      name: 'Jewelry',
-      image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=500',
-      count: '120 Items',
-      link: '/products?category=jewelry',
+      name: 'Bracelet',
+      image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=500',
+      link: '/products?category=bracelet',
     },
     {
       id: 3,
-      name: 'Bags',
-      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=500',
-      count: '67 Items',
-      link: '/products?category=bags',
+      name: 'Anklets',
+      image: 'https://images.unsplash.com/photo-1611652022419-a9410f743dfb?auto=format&fit=crop&w=500',
+      link: '/products?category=anklets',
     },
     {
       id: 4,
-      name: 'Shoes',
-      image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=500',
-      count: '89 Items',
-      link: '/products?category=shoes',
+      name: 'Jewelry Set',
+      image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=500',
+      link: '/products?category=jewelry-set',
     },
     {
       id: 5,
-      name: 'Accessories',
-      image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=500',
-      count: '156 Items',
-      link: '/products?category=accessories',
+      name: 'Ring',
+      image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500',
+      link: '/products?category=ring',
     },
     {
       id: 6,
-      name: 'Beauty',
-      image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=500',
-      count: '78 Items',
-      link: '/products?category=beauty',
+      name: 'Cosmetics',
+      image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=500',
+      link: '/products?category=cosmetics',
+    },
+    {
+      id: 7,
+      name: 'Fake-Nail',
+      image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=500',
+      link: '/products?category=fake-nail',
     },
   ];
 
   return (
-    <div className="container mx-auto">
-      <div className="text-center mb-10">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">Shop by Category</h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
-          Discover our curated collection of women's fashion and jewelry
-        </p>
+    <div className="container mx-auto px-4 py-8">
+      {/* Section Title */}
+      <div className="text-center mb-6">
+        <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-2">Categories</h2>
+        <div className="w-20 h-0.5 bg-pink-500 mx-auto"></div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {categories.map((category) => (
-          <Link
-            key={category.id}
-            to={category.link}
-            className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
-          >
-            <div className="aspect-square overflow-hidden">
-              <img
-                src={category.image}
-                alt={category.name}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
-              <h3 className="text-white font-bold text-lg mb-1">{category.name}</h3>
-              <p className="text-gray-200 text-sm">{category.count}</p>
-            </div>
-            <div className="absolute inset-0 bg-pink-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-          </Link>
-        ))}
-      </div>
+      <Swiper
+        modules={[Autoplay]}
+        spaceBetween={12}
+        slidesPerView={4} // mobile default 4 slides
+        autoplay={{ 
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        breakpoints={{
+          320: { slidesPerView: 4, spaceBetween: 10 },
+          480: { slidesPerView: 4, spaceBetween: 12 },
+          640: { slidesPerView: 5, spaceBetween: 15 },
+          768: { slidesPerView: 5, spaceBetween: 15 },
+          1024: { slidesPerView: 6, spaceBetween: 18 },
+          1280: { slidesPerView: 7, spaceBetween: 20 },
+        }}
+        className="category-swiper"
+      >
+        {categories.map((category, index) => (
+          <SwiperSlide key={category.id}>
+            <Link
+              to={category.link}
+              className={`block group ${index === 0 ? 'border-pink-500' : ''}`}
+            >
+              {/* Smaller Circular Card */}
+              <div className="flex justify-center mb-2">
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  className="w-12 h-12 xs:w-16 xs:h-16 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full object-cover shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:scale-105"
+                />
+              </div>
 
-      {/* Featured Jewelry Section */}
-      {/* <div className="mt-16  ">
-        <div className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl p-8">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="md:w-1/2 mb-8 md:mb-0">
-              <h3 className="text-3xl font-bold mb-4">
-                Exclusive Jewelry Collection
+              {/* Category Name */}
+              <h3 className="text-center text-xs xs:text-sm sm:text-sm font-medium text-gray-700 mt-1 group-hover:text-pink-600 transition-colors duration-300">
+                {category.name}
               </h3>
-              <p className="text-gray-600 mb-6">
-                Handcrafted jewelry pieces that complement your style. 
-                From delicate necklaces to statement earrings, find your perfect match.
-              </p>
-              <Link
-                to="/products?category=jewelry"
-                className="inline-flex items-center bg-pink-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-pink-700 transition-colors"
-              >
-                Shop Jewelry
-                <svg
-                  className="w-4 h-4 ml-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </Link>
-            </div>
-            <div className="md:w-1/2 grid grid-cols-2 gap-4">
-              <div className="space-y-4">
-                <div className="bg-white p-4 rounded-lg shadow-sm">
-                  <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mb-3">
-                    <span className="text-pink-600 font-bold">💎</span>
-                  </div>
-                  <h4 className="font-semibold">Diamonds</h4>
-                  <p className="text-sm text-gray-500">Premium quality</p>
-                </div>
-                <div className="bg-white p-4 rounded-lg shadow-sm">
-                  <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
-                    <span className="text-purple-600 font-bold">✨</span>
-                  </div>
-                  <h4 className="font-semibold">Gold & Silver</h4>
-                  <p className="text-sm text-gray-500">Pure materials</p>
-                </div>
-              </div>
-              <div className="space-y-4 mt-8">
-                <div className="bg-white p-4 rounded-lg shadow-sm">
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
-                    <span className="text-blue-600 font-bold">🌟</span>
-                  </div>
-                  <h4 className="font-semibold">Pearls</h4>
-                  <p className="text-sm text-gray-500">Elegant designs</p>
-                </div>
-                <div className="bg-white p-4 rounded-lg shadow-sm">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-3">
-                    <span className="text-green-600 font-bold">💍</span>
-                  </div>
-                  <h4 className="font-semibold">Custom Made</h4>
-                  <p className="text-sm text-gray-500">Personalized pieces</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
+            </Link>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      {/* Custom CSS for xs breakpoint */}
+      <style jsx>{`
+        @media (min-width: 320px) {
+          .xs\\:w-16 { width: 4rem; }
+          .xs\\:h-16 { height: 4rem; }
+          .xs\\:text-sm { font-size: 0.875rem; }
+        }
+      `}</style>
     </div>
   );
 };

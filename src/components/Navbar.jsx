@@ -54,7 +54,7 @@ const Navbar = () => {
                                 3
                             </span>
                         </Link>
-                        <Link to="/account" className="text-gray-700 hover:text-pink-600">
+                        <Link to="/admin" className="text-gray-700 hover:text-pink-600">
                             <User size={20} />
                         </Link>
                     </div>
