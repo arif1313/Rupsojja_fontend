@@ -143,9 +143,8 @@ const Products = () => {
 
         {/* Products Grid */}
         <div className="">
-          {/* Toolbar */}
-         {/* Toolbar */}
-<div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+        
+<div className="flex flex-row md:items-center md:justify-between mb-6 gap-4">
   
   {/* Left Side */}
   <div className="flex items-center gap-4">
@@ -157,9 +156,6 @@ const Products = () => {
       Filters
     </button>
 
-    <span className="text-gray-600 text-sm">
-      Showing {products.length} products
-    </span>
   </div>
 
   {/* Right Side */}

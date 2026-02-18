@@ -88,67 +88,75 @@ const Cart = () => {
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-5">
               {cartItems.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex flex-row gap-4 border rounded-xl p-4 shadow-sm bg-white"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="sm:w-32 h-32 object-cover rounded-lg"
-                  />
+             <div
+  key={item.id}
+  className="flex gap-3 bg-gray-100 rounded-2xl p-3 shadow-sm"
+>
+  {/* Product Image */}
+  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-xl flex items-center justify-center">
+    <img
+      src={item.image}
+      alt={item.name}
+      className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+    />
+  </div>
 
-                  <div className="flex-1 flex flex-col justify-between">
-                    <div className="flex justify-between">
-                      <div>
-                        <h3 className="font-semibold text-lg">
-                          {item.name}
-                        </h3>
-                        <p className="text-sm text-gray-500">
-                          Size: {item.size}
-                        </p>
-                        <p className="text-pink-600 font-bold mt-1">
-                          ${item.price.toFixed(2)}
-                        </p>
-                      </div>
+  {/* Right Content */}
+  <div className="flex-1 flex flex-col justify-between">
+    
+    {/* Top Row */}
+    <div className="flex justify-between items-start">
+      <div className="pr-2">
+        <h3 className="text-sm sm:text-base font-medium text-gray-800 leading-tight line-clamp-2">
+          {item.name}
+        </h3>
 
-                      <button
-                        onClick={() => removeItem(item.id)}
-                        className="text-gray-400 hover:text-red-500"
-                      >
-                        <Trash2 size={18} />
-                      </button>
-                    </div>
+        <p className="text-xs sm:text-sm text-gray-500 mt-1">
+          ৳ {item.price} × {item.quantity}
+        </p>
+      </div>
 
-                    <div className="flex items-center justify-between mt-4">
-                      <div className="flex items-center border rounded-full overflow-hidden">
-                        <button
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity - 1)
-                          }
-                          className="px-3 py-1 hover:bg-gray-100"
-                        >
-                          <Minus size={16} />
-                        </button>
-                        <span className="px-4 text-sm font-medium">
-                          {item.quantity}
-                        </span>
-                        <button
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity + 1)
-                          }
-                          className="px-3 py-1 hover:bg-gray-100"
-                        >
-                          <Plus size={16} />
-                        </button>
-                      </div>
+      <button
+        onClick={() => removeItem(item.id)}
+        className="w-7 h-7 flex items-center justify-center rounded-full bg-white shadow-sm text-gray-400 hover:text-red-500"
+      >
+        <Trash2 size={14} />
+      </button>
+    </div>
 
-                      <span className="font-bold text-lg">
-                        ${(item.price * item.quantity).toFixed(2)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+    {/* Bottom Row */}
+    <div className="flex items-center justify-between mt-3">
+      
+      {/* Quantity */}
+      <div className="flex items-center border bg-white rounded-lg overflow-hidden">
+        <button
+          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+          className="px-2 py-1 text-gray-500 hover:bg-gray-100"
+        >
+          <Minus size={14} />
+        </button>
+
+        <span className="px-3 text-sm font-medium">
+          {item.quantity}
+        </span>
+
+        <button
+          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+          className="px-2 py-1 text-gray-500 hover:bg-gray-100"
+        >
+          <Plus size={14} />
+        </button>
+      </div>
+
+      {/* Total Price */}
+      <span className="text-sm sm:text-base font-semibold text-gray-900">
+        ৳ {(item.price * item.quantity).toFixed(0)}
+      </span>
+    </div>
+  </div>
+</div>
+
+
               ))}
 
              
