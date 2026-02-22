@@ -12,7 +12,7 @@ const ProductGrid = ({ products, columns = 4 }) => {
 
   return (
   
-    <div className={`grid ${gridCols[columns]} gap-6`}>
+    <div className={`grid ${gridCols[columns]} gap-2 lg:gap-6 md:gap-4`}>
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
