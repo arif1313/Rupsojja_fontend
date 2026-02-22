@@ -19,16 +19,16 @@ const ProductCard = ({ product }) => {
 
   return (
     <Link to={`/product/${product.id}`} className="block">
-      <div className="group relative bg-white rounded-lg overflow-hidden 
+      <div className="group relative bg-slate-200 rounded-lg overflow-hidden 
                       shadow-sm hover:shadow-xl 
                       transition-all duration-300">
 
         {/* Product Image */}
-        <div className="relative overflow-hidden h-44 md:h-56 lg:h-64">
+        <div className="relative overflow-hidden h-32 md:h-56 lg:h-64">
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover 
+            className="h-full w-full object-cover 
                        group-hover:scale-110 
                        transition-transform duration-500"
           />

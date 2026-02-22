@@ -12,11 +12,11 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className=" container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           
           {/* Logo */}
-          <Link to="/" className="text-2xl font-bold text-pink-600">
+          <Link to="/" className="sm:text-xl md:text-xl lg:text-2xl font-bold text-pink-600">
             Flexo Mart
           </Link>
 
@@ -52,7 +52,7 @@ const Navbar = () => {
                 3
               </span>
             </Link>
-            <Link to="/account" className="text-gray-700 hover:text-pink-600">
+            <Link to="/admin" className="text-gray-700 hover:text-pink-600">
               <User size={20} />
             </Link>
           </div>
@@ -71,7 +71,7 @@ const Navbar = () => {
                 3
               </span>
             </Link>
-            <Link to="/account" className="text-gray-700 hover:text-pink-600">
+            <Link to="/admin" className="text-gray-700 hover:text-pink-600">
               <User size={20} />
             </Link>
             {/* Hamburger Menu */}

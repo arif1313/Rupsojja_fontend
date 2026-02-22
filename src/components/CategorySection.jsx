@@ -1,84 +1,74 @@
-import React, { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
-import 'swiper/css';
+import React, { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 const CategorySection = ({ onCategorySelect }) => {
   const categories = [
-    { id: 0, name: 'All Products', value: '' },
-    { id: 1, name: 'Earrings', value: 'earrings' },
-    { id: 2, name: 'Bracelet', value: 'bracelet' },
-    { id: 3, name: 'Anklets', value: 'anklets' },
-    { id: 4, name: 'Jewelry Set', value: 'jewelry-set' },
-    { id: 5, name: 'Ring', value: 'ring' },
-    { id: 6, name: 'Cosmetics', value: 'cosmetics' },
-    { id: 7, name: 'Fake-Nail', value: 'fake-nail' },
+    { id: 0, name: "All", value: "", image: "/earring.png" },
+    { id: 1, name: "Earrings", value: "earrings", image: "/earring.png" },
+    { id: 2, name: "Bracelet", value: "bracelet", image: "/brecelet.png" },
+    { id: 3, name: "Anklets", value: "anklets", image: "/payel.png" },
+    { id: 4, name: "Jewelry Set", value: "jewelry-set", image: "/jewelrySet.png" },
+    { id: 5, name: "Ring", value: "ring", image: "/ring.png" },
+    { id: 6, name: "Cosmetics", value: "cosmetics", image: "/cosmetics.png" },
+    { id: 7, name: "Fake Nail", value: "fake-nail", image: "/fakenails.png" },
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-
-  const handleCategoryClick = (categoryValue) => {
-  setSelectedCategory(categoryValue); // update local UI
-  if (onCategorySelect) onCategorySelect(categoryValue); // notify parent
-};
+  const handleCategoryClick = (value) => {
+    setSelectedCategory(value);
+    if (onCategorySelect) {
+      onCategorySelect(value);
+    }
+  };
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 py-6">
       <Swiper
-        modules={[Autoplay]}
-        spaceBetween={25}
+        spaceBetween={16}   // ✅ Mobile gap
         slidesPerView={4}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
         breakpoints={{
-          320: { slidesPerView: 4, spaceBetween: 18 },
-          480: { slidesPerView: 4, spaceBetween: 12 },
-          640: { slidesPerView: 5, spaceBetween: 15 },
-          768: { slidesPerView: 5, spaceBetween: 15 },
-          1024: { slidesPerView: 6, spaceBetween: 18 },
-          1280: { slidesPerView: 7, spaceBetween: 20 },
+          640: { slidesPerView: 5, spaceBetween: 20 },
+          768: { slidesPerView: 6, spaceBetween: 24 },
+          1024: { slidesPerView: 8, spaceBetween: 24 },
         }}
-        className="category-swiper"
       >
         {categories.map((category) => (
           <SwiperSlide key={category.id}>
-            <button
-              onClick={() => handleCategoryClick(category.value)}
-              className={`block group ${
-                selectedCategory === category.value ? 'border-pink-500' : ''
-              }`}
-            >
-              {/* Smaller Circular Card */}
-              <div className="flex justify-center mb-2">
+            <div className="flex flex-col items-center">
+
+              {/* ✅ Full Circle Image */}
+              <div
+                onClick={() => handleCategoryClick(category.value)}
+                className={`w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 cursor-pointer transition-all duration-300 ${
+                  selectedCategory === category.value
+                    ? "border-pink-500"
+                    : "border-gray-200"
+                }`}
+              >
                 <img
-                  src={`https://images.unsplash.com/100x100/?${category.name}`}
+                  src={category.image}
                   alt={category.name}
-                  className="w-12 h-12 xs:w-16 xs:h-16 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full object-cover shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover"
                 />
               </div>
 
-              {/* Category Name */}
-              <h3 className="text-center text-xs xs:text-sm sm:text-sm font-medium text-gray-700 mt-1 group-hover:text-pink-600 transition-colors duration-300">
+              {/* ✅ Category Name Below Image */}
+              <span
+                className={`mt-2 text-[11px] md:text-sm text-center font-medium ${
+                  selectedCategory === category.value
+                    ? "text-pink-600"
+                    : "text-gray-700"
+                }`}
+              >
                 {category.name}
-              </h3>
-            </button>
+              </span>
+
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
-
-      <style jsx>{`
-        @media (min-width: 320px) {
-          .xs\\:w-16 {
-            width: 4rem;
-          }
-          .xs\\:h-16 {
-            height: 4rem;
-          }
-          .xs\\:text-sm {
-            font-size: 0.875rem;
-          }
-        }
-      `}</style>
     </div>
   );
 };
