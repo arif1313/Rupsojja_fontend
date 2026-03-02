@@ -10,11 +10,13 @@ import Products from "../components/Products";
 
 const Home = () => {
   return (
-    <>
-      <HeroCarousel />
+    < >
+     <div className="bg-white">
+       <HeroCarousel />
       <CategorySection />
    <Products></Products>
       <Footer />
+     </div>
     </>
   );
 };

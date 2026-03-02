@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-
+import { useCategory } from "../context/CategoryContext"
 const CategorySection = ({ onCategorySelect }) => {
+    const { selectedCategory, setSelectedCategory } = useCategory();
+
+
   const categories = [
     { id: 0, name: "All", value: "", image: "/earring.png" },
     { id: 1, name: "Earrings", value: "earrings", image: "/earring.png" },
@@ -14,17 +17,9 @@ const CategorySection = ({ onCategorySelect }) => {
     { id: 7, name: "Fake Nail", value: "fake-nail", image: "/fakenails.png" },
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState("");
-
-  const handleCategoryClick = (value) => {
-    setSelectedCategory(value);
-    if (onCategorySelect) {
-      onCategorySelect(value);
-    }
-  };
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="container mx-auto px-4 py-6 bg-white">
       <Swiper
         spaceBetween={16}   // ✅ Mobile gap
         slidesPerView={4}
@@ -40,7 +35,7 @@ const CategorySection = ({ onCategorySelect }) => {
 
               {/* ✅ Full Circle Image */}
               <div
-                onClick={() => handleCategoryClick(category.value)}
+                onClick={() => setSelectedCategory(category.value)}
                 className={`w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 cursor-pointer transition-all duration-300 ${
                   selectedCategory === category.value
                     ? "border-pink-500"

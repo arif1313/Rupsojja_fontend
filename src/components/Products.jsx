@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Filter } from "lucide-react";
 import ProductGrid from "./ProductGrid";
 import { getAllProducts } from "../Api/ProductApi";
+import { useSearch } from "../context/SearchContext"; // Added missing import
+import axios from "axios"; // Added missing import
+import { useCategory } from "../context/CategoryContext";
 
 const Products = () => {
+
+  const { selectedCategory, setSelectedCategory } = useCategory();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -16,15 +21,16 @@ const Products = () => {
   const [selectedDiscount, setSelectedDiscount] = useState("");
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
-
   const [sortBy, setSortBy] = useState("featured");
   const [showFilters, setShowFilters] = useState(false);
   const [visibleCount, setVisibleCount] = useState(8);
 
+  const { searchTerm } = useSearch(); // Added missing hook
+
+
   // ✅ Fetch products
-  useEffect(() => {
+  useEffect(() => {  
     const fetchProducts = async () => {
       try {
         const data = await getAllProducts();
@@ -41,6 +47,9 @@ const Products = () => {
     fetchProducts();
   }, []);
 
+
+  console.log(`selectedCategory ${selectedCategory}`)
+    console.log(`searchTerm ${searchTerm}`)
   // ✅ Filtering logic
   const filteredProducts = products.filter((product) => {
     if (selectedCategory && product.category !== selectedCategory) {
@@ -72,7 +81,7 @@ const Products = () => {
   if (error) return <p className="text-center py-10 text-red-500">{error}</p>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-white">
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="w-full">
 
@@ -117,7 +126,7 @@ const Products = () => {
         />
       )}
 
-      {/* Drawer (Your Design Same — Not Modified) */}
+      {/* Drawer */}
       <div
         className={`fixed top-0 left-0 h-full w-80 bg-white shadow-lg z-50 transform transition-transform duration-300 ${
           isDrawerOpen ? "translate-x-0" : "-translate-x-full"

@@ -16,9 +16,9 @@ const Carousel = () => {
 
     return () => clearInterval(timer); // cleanup on unmount
   }, []);
-
+0
   return (
-   <section className="relative h-96 md:h-screen bg-cover bg-center" 
+   <section className="relative h-96 md:h-screen bg-cover bg-center container mx-auto" 
       style={{ backgroundImage: "url('https://i.ibb.co.com/gMQTN2FR/beauty-cream-tube-mockup-skincare-with-podium-natural-background-604638-1.jpg')" }}
     >
       {/* Overlay */}
