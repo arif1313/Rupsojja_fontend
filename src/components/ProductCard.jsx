@@ -1,14 +1,32 @@
+// components/ProductCard.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, ShoppingBag } from 'lucide-react';
 
+import toast from 'react-hot-toast';
+import { useCart } from '../context/CartContext';
+
 const ProductCard = ({ product }) => {
   const [isLiked, setIsLiked] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const { addToCart } = useCart();
 
-  const handleAddToCart = (e) => {
+  const handleAddToCart = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('Added to cart:', product.id);
+    
+    if (isAdding) return;
+    
+    setIsAdding(true);
+    const result = await addToCart(product._id, 1);
+    
+    if (result.success) {
+      toast.success(`${product.name} added to cart!`);
+    } else {
+      toast.error(result.error || 'Failed to add to cart');
+    }
+    
+    setIsAdding(false);
   };
 
   const handleLike = (e) => {
@@ -17,8 +35,10 @@ const ProductCard = ({ product }) => {
     setIsLiked(!isLiked);
   };
 
+  const isOutOfStock = product.inventory?.quantity === 0;
+
   return (
-    <Link to={`/product/${product.id}`} className="block">
+    <Link to={`/product/${product._id}`} className="block">
       <div className="group relative bg-slate-200 rounded-lg overflow-hidden 
                       shadow-sm hover:shadow-xl 
                       transition-all duration-300">
@@ -61,6 +81,15 @@ const ProductCard = ({ product }) => {
               SALE
             </div>
           )}
+
+          {/* Out of Stock Overlay */}
+          {isOutOfStock && (
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+              <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                Out of Stock
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Product Info */}
@@ -79,11 +108,11 @@ const ProductCard = ({ product }) => {
           {/* Price */}
           <div className="flex items-center gap-2 mb-2 md:mb-3">
             <span className="text-sm md:text-base font-bold text-gray-900">
-              ${product.price.toFixed(2)}
+              ${product.price?.toFixed(2)}
             </span>
             {product.originalPrice && (
               <span className="text-xs md:text-sm text-gray-500 line-through">
-                ${product.originalPrice.toFixed(2)}
+                ${product.originalPrice?.toFixed(2)}
               </span>
             )}
           </div>
@@ -91,21 +120,27 @@ const ProductCard = ({ product }) => {
           {/* Add to Cart Button */}
           <button
             onClick={handleAddToCart}
-            className="
+            disabled={isAdding || isOutOfStock}
+            className={`
               w-full 
-              bg-black text-white 
               py-2 px-3 text-xs
               md:py-3 md:px-4 md:text-sm
               lg:py-3.5 lg:text-base
               rounded-md font-medium
-              hover:bg-gray-800 
               transition-all duration-200
-              active:scale-95
               flex items-center justify-center gap-2
-            "
+              ${
+                isOutOfStock
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : isAdding
+                  ? 'bg-gray-500 cursor-wait'
+                  : 'bg-black hover:bg-gray-800 active:scale-95'
+              }
+              text-white
+            `}
           >
             <ShoppingBag className="w-4 h-4 md:w-5 md:h-5" />
-            Add to Cart
+            {isAdding ? 'Adding...' : isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
           </button>
 
         </div>

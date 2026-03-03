@@ -1,54 +1,53 @@
-import React, { useState } from 'react';
+// components/Cart.jsx
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Trash2, Plus, Minus, ArrowLeft, ShoppingBag, X } from 'lucide-react';
 
+import toast from 'react-hot-toast';
+import { useCart } from '../context/CartContext';
+
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: 'Diamond Necklace',
-      price: 299.99,
-      image:
-        'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=300',
-      quantity: 1,
-      size: 'M',
-    },
-    {
-      id: 2,
-      name: 'Summer Dress',
-      price: 89.99,
-      image:
-        'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=300',
-      quantity: 2,
-      size: 'S',
-    },
-  ]);
-
+  const { 
+    cartItems, 
+    totalItems, 
+    totalAmount,
+    updateQuantity, 
+    removeItem,
+    loading 
+  } = useCart();
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
-  const updateQuantity = (id, newQuantity) => {
-    if (newQuantity < 1) return;
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
+  const handleUpdateQuantity = async (productId, newQuantity) => {
+    if (newQuantity < 1 || isUpdating) return;
+    
+    setIsUpdating(true);
+    const result = await updateQuantity(productId, newQuantity);
+    
+    if (!result.success) {
+      toast.error(result.error || 'Failed to update quantity');
+    }
+    
+    setIsUpdating(false);
   };
 
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+  const handleRemoveItem = async (productId) => {
+    if (isUpdating) return;
+    
+    setIsUpdating(true);
+    const result = await removeItem(productId);
+    
+    if (result.success) {
+      toast.success('Item removed from cart');
+    } else {
+      toast.error(result.error || 'Failed to remove item');
+    }
+    
+    setIsUpdating(false);
   };
 
-  const totalItems = cartItems.reduce(
-    (sum, item) => sum + item.quantity,
-    0
-  );
-
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
+  const subtotal = totalAmount || 0;
   const shipping = subtotal > 100 ? 0 : 9.99;
   const tax = subtotal * 0.08;
   const total = subtotal + shipping + tax;
@@ -57,12 +56,22 @@ const Cart = () => {
     e.preventDefault();
     alert('🎉 Order placed successfully (Cash on Delivery)');
     setIsModalOpen(false);
-    setCartItems([]);
+    // You might want to clear the cart here
   };
+
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="text-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading cart...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-
       <h1 className="text-2xl md:text-3xl font-bold mb-6">
         Shopping Cart ({totalItems} items)
       </h1>
@@ -84,82 +93,80 @@ const Cart = () => {
       ) : (
         <>
           <div className="grid lg:grid-cols-3 gap-8">
-
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-5">
               {cartItems.map((item) => (
-             <div
-  key={item.id}
-  className="flex gap-3 bg-gray-100 rounded-2xl p-3 shadow-sm"
->
-  {/* Product Image */}
-  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-xl flex items-center justify-center">
-    <img
-      src={item.image}
-      alt={item.name}
-      className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
-    />
-  </div>
+                <div
+                  key={item.productId}
+                  className="flex gap-3 bg-gray-100 rounded-2xl p-3 shadow-sm"
+                >
+                  {/* Product Image */}
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-xl flex items-center justify-center">
+                    <img
+                      src={item.image || '/placeholder-image.jpg'}
+                      alt={item.name}
+                      className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+                    />
+                  </div>
 
-  {/* Right Content */}
-  <div className="flex-1 flex flex-col justify-between">
-    
-    {/* Top Row */}
-    <div className="flex justify-between items-start">
-      <div className="pr-2">
-        <h3 className="text-sm sm:text-base font-medium text-gray-800 leading-tight line-clamp-2">
-          {item.name}
-        </h3>
+                  {/* Right Content */}
+                  <div className="flex-1 flex flex-col justify-between">
+                    
+                    {/* Top Row */}
+                    <div className="flex justify-between items-start">
+                      <div className="pr-2">
+                        <h3 className="text-sm sm:text-base font-medium text-gray-800 leading-tight line-clamp-2">
+                          {item.name}
+                        </h3>
 
-        <p className="text-xs sm:text-sm text-gray-500 mt-1">
-          ৳ {item.price} × {item.quantity}
-        </p>
-      </div>
+                        <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                          ৳ {item.price} × {item.quantity}
+                        </p>
+                      </div>
 
-      <button
-        onClick={() => removeItem(item.id)}
-        className="w-7 h-7 flex items-center justify-center rounded-full bg-white shadow-sm text-gray-400 hover:text-red-500"
-      >
-        <Trash2 size={14} />
-      </button>
-    </div>
+                      <button
+                        onClick={() => handleRemoveItem(item.productId)}
+                        disabled={isUpdating}
+                        className="w-7 h-7 flex items-center justify-center rounded-full bg-white shadow-sm text-gray-400 hover:text-red-500 disabled:opacity-50"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
 
-    {/* Bottom Row */}
-    <div className="flex items-center justify-between mt-3">
-      
-      {/* Quantity */}
-      <div className="flex items-center border bg-white rounded-lg overflow-hidden">
-        <button
-          onClick={() => updateQuantity(item.id, item.quantity - 1)}
-          className="px-2 py-1 text-gray-500 hover:bg-gray-100"
-        >
-          <Minus size={14} />
-        </button>
+                    {/* Bottom Row */}
+                    <div className="flex items-center justify-between mt-3">
+                      
+                      {/* Quantity */}
+                      <div className="flex items-center border bg-white rounded-lg overflow-hidden">
+                        <button
+                          onClick={() => handleUpdateQuantity(item.productId, item.quantity - 1)}
+                          disabled={isUpdating}
+                          className="px-2 py-1 text-gray-500 hover:bg-gray-100 disabled:opacity-50"
+                        >
+                          <Minus size={14} />
+                        </button>
 
-        <span className="px-3 text-sm font-medium">
-          {item.quantity}
-        </span>
+                        <span className="px-3 text-sm font-medium">
+                          {item.quantity}
+                        </span>
 
-        <button
-          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-          className="px-2 py-1 text-gray-500 hover:bg-gray-100"
-        >
-          <Plus size={14} />
-        </button>
-      </div>
+                        <button
+                          onClick={() => handleUpdateQuantity(item.productId, item.quantity + 1)}
+                          disabled={isUpdating}
+                          className="px-2 py-1 text-gray-500 hover:bg-gray-100 disabled:opacity-50"
+                        >
+                          <Plus size={14} />
+                        </button>
+                      </div>
 
-      {/* Total Price */}
-      <span className="text-sm sm:text-base font-semibold text-gray-900">
-        ৳ {(item.price * item.quantity).toFixed(0)}
-      </span>
-    </div>
-  </div>
-</div>
-
-
+                      {/* Total Price */}
+                      <span className="text-sm sm:text-base font-semibold text-gray-900">
+                        ৳ {(item.price * item.quantity).toFixed(0)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               ))}
-
-             
             </div>
 
             {/* Order Summary Side */}
@@ -195,20 +202,21 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-               <button
+              
+              <button
                 onClick={() => setIsModalOpen(true)}
-                className="w-full mt-4 bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-full font-semibold transition"
+                disabled={cartItems.length === 0}
+                className="w-full mt-4 bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-full font-semibold transition disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 Proceed to Checkout
               </button>
             </div>
           </div>
 
-          {/* ================= MODAL ================= */}
+          {/* Checkout Modal */}
           {isModalOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
               <div className="bg-white w-full max-w-2xl rounded-xl p-6 relative max-h-[90vh] overflow-y-auto">
-
                 <button
                   onClick={() => setIsModalOpen(false)}
                   className="absolute top-4 right-4 text-gray-400 hover:text-black"
@@ -222,7 +230,7 @@ const Cart = () => {
 
                 <div className="space-y-2 text-sm mb-6">
                   {cartItems.map((item) => (
-                    <div key={item.id} className="flex justify-between">
+                    <div key={item.productId} className="flex justify-between">
                       <span>{item.name} × {item.quantity}</span>
                       <span>${(item.price * item.quantity).toFixed(2)}</span>
                     </div>
@@ -270,7 +278,6 @@ const Cart = () => {
                     Place Order (Cash on Delivery)
                   </button>
                 </form>
-
               </div>
             </div>
           )}

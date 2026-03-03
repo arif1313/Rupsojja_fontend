@@ -5,9 +5,11 @@ import "./index.css";
 import { CartProvider } from "./context/CartContext";
 import { FavouriteProvider } from "./context/FavouriteContext";
 import { CategoryProvider } from "./context/CategoryContext";
+import { AuthProvider } from "./context/AuthContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    <AuthProvider>
     <CategoryProvider>
     <FavouriteProvider>
     <CartProvider>
@@ -15,6 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </CartProvider>
    </FavouriteProvider>
    </CategoryProvider>
+   </AuthProvider>
   </React.StrictMode>
 );
 
