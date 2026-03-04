@@ -213,6 +213,16 @@ export const createOrder = async (orderData) => {
   }
 };
 
+export const allOrder = async (orderData) => {
+  try {
+    const response = await axiosInstance.get('/orders');
+    return response.data; // Return the full response data
+  } catch (error) {
+    console.error('Error creating order:', error);
+    throw error;
+  }
+};
+
 // export const getUserOrders = async (email) => {
 //   const response = await axiosInstance.get(`/orders/user?sessionId=${sessionid}`);
 //   return response.data.data;
