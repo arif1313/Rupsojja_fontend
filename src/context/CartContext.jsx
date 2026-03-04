@@ -1,6 +1,7 @@
 // context/CartContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getCart } from '../api/cardApi';
+import { getCart } from '../Api/ProductApi';
+
 // import { getCart, addToCart as apiAddToCart, updateCartItem, removeFromCart } from '../api/cartApi';
 
 const CartContext = createContext();
