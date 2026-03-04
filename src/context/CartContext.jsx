@@ -1,8 +1,12 @@
 // context/CartContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getCart } from '../Api/ProductApi';
-
-// import { getCart, addToCart as apiAddToCart, updateCartItem, removeFromCart } from '../api/cartApi';
+import { 
+  getCart, 
+  addToCart as apiAddToCart, 
+  updateCartItem as apiUpdateCartItem, 
+  removeFromCart as apiRemoveFromCart,
+  clearCart as apiClearCart
+} from '../Api/ProductApi';
 
 const CartContext = createContext();
 
@@ -13,10 +17,6 @@ export const CartProvider = ({ children }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // You need to get userId from your AuthContext
-  // For now, let's assume you have it or use a default
-  const userId = 'guest-user-id'; // Replace this with actual user ID from AuthContext
-
   // Fetch cart on mount
   useEffect(() => {
     fetchCart();
@@ -25,7 +25,7 @@ export const CartProvider = ({ children }) => {
   const fetchCart = async () => {
     try {
       setLoading(true);
-      const cartData = await getCart(userId);
+      const cartData = await getCart();
       setCart(cartData);
     } catch (error) {
       console.error('Failed to fetch cart:', error);
@@ -37,7 +37,7 @@ export const CartProvider = ({ children }) => {
   const addToCart = async (productId, quantity = 1) => {
     try {
       setLoading(true);
-      const updatedCart = await apiAddToCart(userId, productId, quantity);
+      const updatedCart = await apiAddToCart(productId, quantity);
       setCart(updatedCart);
       return { success: true };
     } catch (error) {
@@ -51,7 +51,7 @@ export const CartProvider = ({ children }) => {
   const updateQuantity = async (productId, quantity) => {
     try {
       setLoading(true);
-      const updatedCart = await updateCartItem(userId, productId, quantity);
+      const updatedCart = await apiUpdateCartItem(productId, quantity);
       setCart(updatedCart);
       return { success: true };
     } catch (error) {
@@ -65,7 +65,7 @@ export const CartProvider = ({ children }) => {
   const removeItem = async (productId) => {
     try {
       setLoading(true);
-      const updatedCart = await removeFromCart(userId, productId);
+      const updatedCart = await apiRemoveFromCart(productId);
       setCart(updatedCart);
       return { success: true };
     } catch (error) {
@@ -79,11 +79,12 @@ export const CartProvider = ({ children }) => {
   const clearCart = async () => {
     try {
       setLoading(true);
-      // You might want to import clearCart from API
-      // const updatedCart = await clearCart(userId);
-      // setCart(updatedCart);
+      const updatedCart = await apiClearCart();
+      setCart(updatedCart);
+      return { success: true };
     } catch (error) {
       console.error('Failed to clear cart:', error);
+      return { success: false, error: error.message };
     } finally {
       setLoading(false);
     }

@@ -12,9 +12,11 @@ import {
   ChevronRight
 } from "lucide-react";
 
-import { useSearch } from "../context/SearchContext";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../context/CartContext";
+import { useSearch } from "../context/SearchContext";
+
 
 const Navbar = () => {
     const { totalItems, setIsCartOpen } = useCart();
@@ -210,18 +212,18 @@ const Navbar = () => {
 
               {/* Cart Button with Animation */}
               <motion.button
-    whileHover={{ scale: 1.1 }}
-    whileTap={{ scale: 0.95 }}
-    onClick={() => setIsCartOpen(true)}
-    className="relative p-2.5 text-gray-700 hover:text-pink-600 rounded-xl hover:bg-pink-50 transition-all duration-300 group"
-    aria-label="Shopping cart"
+     whileHover={{ scale: 1.1 }}
+  whileTap={{ scale: 0.95 }}
+  onClick={() => setIsCartOpen(true)}
+  className="relative p-2.5 text-gray-700 hover:text-pink-600 rounded-xl hover:bg-pink-50 transition-all duration-300 group"
+  aria-label="Shopping cart"
   >
     <ShoppingCart size={20} className="transition-transform group-hover:rotate-12" />
     {totalItems > 0 && (
       <motion.span
         initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        className="absolute -top-1 -right-1 bg-gradient-to-r from-pink-600 to-purple-600 text-white text-xs font-bold rounded-full min-w-[20px] h-5 px-1 flex items-center justify-center shadow-lg"
+      animate={{ scale: 1 }}
+      className="absolute -top-1 -right-1 bg-gradient-to-r from-pink-600 to-purple-600 text-white text-xs font-bold rounded-full min-w-[20px] h-5 px-1 flex items-center justify-center shadow-lg"
       >
         {totalItems}
       </motion.span>
