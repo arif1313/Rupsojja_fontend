@@ -8,6 +8,7 @@ import Products from "../components/Products";
 import AdminLayout from "../components/AdminLayout"; // Added missing import
 import PrivateRoute from "../components/PrivateRoute";
 import Login from "../components/Login";
+import Checkout from "../components/Checkout";
 
 
 const AppRoutes = () => {
@@ -17,7 +18,7 @@ const AppRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/products" element={<Products />} />
       {/* <Route path="/orders" element={<Orders />} /> */}
-
+   <Route path="/checkout" element={<Checkout />} />
       <Route path="/admin" element={ <PrivateRoute>
       <AdminLayout />
     </PrivateRoute>}>
