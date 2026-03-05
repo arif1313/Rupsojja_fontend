@@ -13,7 +13,8 @@ import {
   User,
   Eye
 } from 'lucide-react';
-import { allOrder } from '../Api/ProductApi';
+import { allOrder } from '../api/ProductApi';
+
 
 
 const AdminDashboard = () => {
@@ -39,11 +40,9 @@ const AdminDashboard = () => {
       setLoading(true);
       const response = await allOrder();
       
-      // এক্সট্রাক্ট অর্ডার ডেটা
       const ordersData = response.data || [];
       setOrders(ordersData);
       
-      // ক্যালকুলেট স্ট্যাটিসটিক্স
       calculateStats(ordersData);
       
       setError(null);
@@ -56,26 +55,26 @@ const AdminDashboard = () => {
   };
 
   const calculateStats = (ordersData) => {
-    // টোটাল রেভিনিউ ক্যালকুলেট করুন
+
     const totalRevenue = ordersData.reduce((sum, order) => {
       return sum + (order.totalAmount || 0);
     }, 0);
 
-    // বিভিন্ন স্ট্যাটাসের অর্ডার কাউন্ট করুন
+ 
     const pendingOrders = ordersData.filter(o => o.orderStatus === 'pending').length;
     const processingOrders = ordersData.filter(o => o.orderStatus === 'processing').length;
     const deliveredOrders = ordersData.filter(o => o.orderStatus === 'delivered').length;
     const completedOrders = ordersData.filter(o => o.orderStatus === 'completed' || o.orderStatus === 'delivered').length;
     
-    // টোটাল প্রোডাক্ট আইটেম কাউন্ট করুন
+
     const totalItems = ordersData.reduce((sum, order) => {
       return sum + (order.items?.length || 0);
     }, 0);
 
     setStats({
-      totalProducts: 156, // প্রোডাক্ট API থেকে আনতে হবে
+      totalProducts: 156, 
       totalOrders: ordersData.length,
-      totalUsers: 1245, // ইউজার API থেকে আনতে হবে
+      totalUsers: 1245, 
       totalRevenue: totalRevenue,
       pendingOrders,
       processingOrders,
@@ -85,7 +84,6 @@ const AdminDashboard = () => {
     });
   };
 
-  // ডেট ফরম্যাট করুন
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -97,7 +95,7 @@ const AdminDashboard = () => {
     });
   };
 
-  // স্ট্যাটাস ব্যাজ কালার
+
   const getStatusColor = (status) => {
     switch(status?.toLowerCase()) {
       case 'pending':
@@ -116,7 +114,7 @@ const AdminDashboard = () => {
     }
   };
 
-  // পেমেন্ট স্ট্যাটাস ব্যাজ কালার
+
   const getPaymentStatusColor = (status) => {
     switch(status?.toLowerCase()) {
       case 'paid':
@@ -130,7 +128,7 @@ const AdminDashboard = () => {
     }
   };
 
-  // স্ট্যাটস কার্ড ডেটা
+
   const statsCards = [
     { 
       title: 'Total Products', 
@@ -187,7 +185,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="space-y-6">
-      {/* হেডার */}
+ 
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
         <div className="text-sm text-gray-500">
@@ -195,7 +193,7 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* স্ট্যাটস গ্রিড */}
+   
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statsCards.map((stat, index) => (
           <div key={index} className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
@@ -213,9 +211,8 @@ const AdminDashboard = () => {
         ))}
       </div>
 
-      {/* অর্ডার স্ট্যাটাস ওভারভিউ */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* পাই চার্টের পরিবর্তে স্ট্যাটাস কার্ড */}
+  
         <div className="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
           <h2 className="text-lg font-semibold mb-4">Order Status Overview</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -237,7 +234,7 @@ const AdminDashboard = () => {
             </div>
           </div>
           
-          {/* প্রোগ্রেস বার */}
+      
           <div className="mt-6">
             <div className="flex justify-between text-sm mb-2">
               <span>Completion Rate</span>
@@ -254,7 +251,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* কুইক ইনফো */}
+ 
         <div className="bg-white rounded-xl shadow-sm p-6">
           <h2 className="text-lg font-semibold mb-4">Quick Info</h2>
           <div className="space-y-4">
@@ -276,7 +273,6 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* রিসেন্ট অর্ডার */}
       <div className="bg-white rounded-xl shadow-sm p-6">
         <div className="flex justify-between items-center mb-6">
           <div>
@@ -299,7 +295,7 @@ const AdminDashboard = () => {
           <div className="space-y-4">
             {orders.slice(0, 5).map((order) => (
               <div key={order._id} className="border rounded-lg p-4 hover:shadow-sm transition-shadow">
-                {/* অর্ডার হেডার */}
+               
                 <div className="flex flex-wrap items-center justify-between gap-4 mb-3">
                   <div className="flex items-center gap-3">
                     <span className="font-mono font-medium text-pink-600">{order.orderNumber}</span>
@@ -316,9 +312,9 @@ const AdminDashboard = () => {
                   </span>
                 </div>
 
-                {/* অর্ডার ডিটেলস */}
+              
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {/* কাস্টমার ইনফো */}
+             
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-sm">
                       <User size={16} className="text-gray-400" />
@@ -334,7 +330,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
 
-                  {/* প্রোডাক্ট আইটেম */}
+              
                   <div className="md:col-span-1">
                     <p className="text-sm font-medium mb-2">Items ({order.items.length})</p>
                     <div className="space-y-1">
@@ -350,7 +346,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
 
-                  {/* টোটাল */}
+              
                   <div className="text-right">
                     <p className="text-sm text-gray-500 mb-1">Total Amount</p>
                     <p className="text-xl font-bold text-gray-800">${order.totalAmount}</p>
@@ -363,7 +359,6 @@ const AdminDashboard = () => {
         )}
       </div>
 
-      {/* ফুটার স্ট্যাটস */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-lg p-4">
           <p className="text-sm text-pink-600 font-medium">Today's Orders</p>

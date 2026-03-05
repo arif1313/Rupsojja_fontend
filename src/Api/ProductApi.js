@@ -222,7 +222,12 @@ export const allOrder = async (orderData) => {
     throw error;
   }
 };
-
+export const updateOrderStatus = async (orderId, status) => {
+  const response = await axiosInstance.patch(`/orders/${orderId}/status`, { 
+    orderStatus: status  // ✅ Match backend expectation
+  });
+  return response.data.data;
+};
 // export const getUserOrders = async (email) => {
 //   const response = await axiosInstance.get(`/orders/user?sessionId=${sessionid}`);
 //   return response.data.data;
@@ -236,14 +241,6 @@ export const allOrder = async (orderData) => {
 
 // export const getOrderById = async (orderId) => {
 //   const response = await axiosInstance.get(`/orders/${orderId}`);
-//   return response.data.data;
-// };
-
-// export const updateOrderStatus = async (orderId, status) => {
-//   const response = await axiosInstance.patch(
-//     `/orders/${orderId}/status`,
-//     { status }
-//   );
 //   return response.data.data;
 // };
 

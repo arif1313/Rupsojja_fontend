@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShoppingBag } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { createOrder } from '../Api/ProductApi';
-import { useCart } from '../context/CartContext';
 
+import { useCart } from '../context/CartContext';
+import { createOrder } from '../api/ProductApi';
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -17,7 +17,6 @@ const Checkout = () => {
     address: '',
   });
 
-  // City options
   const cities = [
     { value: 'Dhaka', label: 'Dhaka', shippingCharge: 70 },
     { value: 'Chattogram', label: 'Chattogram', shippingCharge: 120 },
@@ -28,8 +27,8 @@ const Checkout = () => {
     { value: 'Rangpur', label: 'Rangpur', shippingCharge: 120 },
     { value: 'Mymensingh', label: 'Mymensingh', shippingCharge: 120 },
     { value: 'Comilla', label: 'Comilla', shippingCharge: 120 },
-    { value: 'Narayanganj', label: 'Narayanganj', shippingCharge: 70 }, // Near Dhaka
-    { value: 'Gazipur', label: 'Gazipur', shippingCharge: 70 }, // Near Dhaka
+    { value: 'Narayanganj', label: 'Narayanganj', shippingCharge: 100 }, // Near Dhaka
+    { value: 'Gazipur', label: 'Gazipur', shippingCharge: 100 }, // Near Dhaka
   ];
 
   const subtotal = totalAmount || 0;
@@ -96,24 +95,19 @@ const Checkout = () => {
         notes: '',
       };
 
-      console.log('Sending order data:', orderData);
-
       const response = await createOrder(orderData);
       
-      console.log('Order response:', response);
-
       if (response.success) {
         localStorage.setItem('lastOrder', JSON.stringify(response.data));
         await clearCart();
         toast.success('Order placed successfully!');
-        navigate('/order-confirmation', { 
+        navigate('/', { 
           state: { order: response.data } 
         });
       } else {
         throw new Error(response.message || 'Failed to place order');
       }
     } catch (error) {
-      console.error('Order error:', error);
       
       const errorMessage = error.response?.data?.message || 
                           error.message || 
@@ -311,7 +305,7 @@ const Checkout = () => {
             {/* Shipping Info Note */}
             <div className="mt-4 p-3 bg-blue-50 rounded-lg text-xs text-blue-700">
               <p className="font-medium mb-1">🚚 Shipping Information:</p>
-              <p>• Dhaka, Narayanganj & Gazipur: ৳70</p>
+              <p>• Dhaka, Narayanganj & Gazipur: ৳100</p>
               <p>• All other cities: ৳120</p>
               <p className="mt-1">Free shipping on orders above ৳1000</p>
             </div>
