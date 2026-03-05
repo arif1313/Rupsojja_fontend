@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { createProduct } from "../Api/ProductApi";
+import { createProduct } from "../api/ProductApi";
+
 
 const AddProduct = () => {
   const navigate = useNavigate();
